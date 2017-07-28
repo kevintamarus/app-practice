@@ -5,45 +5,40 @@ const bodyParser = require('body-parser')
 //middleware
 //var parser = require('body parser');
 
-//connecting mongoDB
-const MongoClient = require('mongodb').MongoClient;
+//connecting mongoose
+const mongoose = require('mongoose');
 const keys = require('../config/keys');
+const Match = require('../models/matches')
 const mongoLink = keys.mongoURI;
 
-var db;
-
-MongoClient.connect(mongoLink, function(err, database) {
-  if(err) { console.log(err); }
-  db = database;
-});
+mongoose.connect(mongoLink);
 
 const app = express();
 const PORT = 3000;
 
 app.get('/', function(req, res) {
- let data = db.collection('matches').find()
- console.log(data.data);
- res.send(data.data);
+  Match.findOne({})
+  .then(function(data) {
+    console.log('this is the data ', data);
+    res.send(data);
+  })
+  .catch(function(reason) {
+    console.log('did not retrieve data');
+    res.send(reason);
+  })
 })
-  // .then(function(data) {
-  //   res.send(data);
-  //   console.log(data);
-  //   })
-  // .catch(err => console.log(err));
-  //res.send(data);
 
 app.post('/', function(req, res) {
-  db.collection('matches').save({
+  let match = new Match({
     date: 'july28',
     white: 'Kevin',
     black: 'Tamarus',
     result: 'Draw'
-  }, function(err, result) {
-    if (err) { console.log(err);}
-    console.log('post is stored in database');
+  });
+  match.save(function(err) {
+    if(err) { return handleError(err) }
   })
   res.send('Post received');
-  res.end();
 })
 
 app.listen(PORT, function(err) {

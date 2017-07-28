@@ -8,4 +8,6 @@ const matchSchema = new Schema({
   result: String
 })
 
-mongoose.model('matches', matchSchema);
+const Match = mongoose.model('matches', matchSchema);
+
+module.exports = Match;
