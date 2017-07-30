@@ -6,11 +6,11 @@ class Post extends React.Component {
       <div className="post-main">
         <h1>Submit your matches here:</h1>
         <form>
-          Date: <input name="input-date" type="text"/>
-          Player White: <input name="input-white" type="text"/>
-          Player Black: <input name="input-black" type="text"/>
-          Result: <input name="input-result" type="text"/>
-          <button className="submit" value="Submit" onClick={this.props.clickSubmit}>Submit Match</button> 
+          Date: <input name="input-date" type="text" onChange={(input) => this.props.handleInputChange('date', input)}/>
+          Player White: <input name="input-white" type="text" onChange={(input) => this.props.handleInputChange('white', input)}/>
+          Player Black: <input name="input-black" type="text" onChange={(input) => this.props.handleInputChange('black', input)}/>
+          Result: <input name="input-result" type="text" onChange={(input) => this.props.handleInputChange('result', input)}/>
+          <button className="submit" value="Submit" onClick={this.props.handleClickSubmit}>Submit Match</button> 
         </form>
       </div>
     )

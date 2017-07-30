@@ -12,42 +12,56 @@ class App extends React.Component {
       display2: null,
       display3: null,
       display4: null,
-    }
-    this.clickSearch = this.clickSearch.bind(this);
-    this.clickSubmit = this.clickSubmit.bind(this);
+      display5: null,
+      date: '',
+      white: '',
+      black: '',
+      result: '',
+
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handlecClickSearch = this.handleClickSearch.bind(this);
+    this.handleClickSubmit = this.handleClickSubmit.bind(this);
+  }
+
+  handleInputChange(stateToChange, input) {
+    let string = input.target.value;
+    this.setState({[stateToChange]: string});
   }
   //axios GET
-  clickSearch() {
+  handleClickSearch() {
     axios.get('/match')
     .then(({data}) => {
       this.displayResults(data);
     })
     .catch(err => {
-      console.log("An error occured, couldn't get data");
-      //this.displayResults("An Error Occurred, Couldn't Get Data");
+      console.log(err, ": An error occured, couldn't get data");
+      this.displayResults("An error occured, couldn't get data");
     });
   }
   //axios POST
-  clickSubmit(data) {
+  handleClickSubmit(data) {
     data.preventDefault();
-    axios.post('/match', {
-      number: 1,
-      date: "July 29",
-      white: "Kevin",
-      black: "Tamarus",
-      result: "Draw"
-    })
-    .then((response) => {
-      console.log(response);
-      this.displayResults('Match Submitted Sucessfully!');
-    })
-    .catch((error) => {
-      console.log(error);
-      this.displayResults("An error occurred, couldn't submit data");
-    })
+    if(this.state.date === '' || this.state.white === '' || this.state.black === '' || this.state.result === '') {
+      this.displayResults('You did not fill out the form completely, please try again!');
+    } else {
+      axios.post('/match', {
+        number: 1,
+        date: this.state.date,
+        white: this.state.white,
+        black: this.state.black,
+        result: this.state.result,
+      })
+      .then((response) => {
+        console.log(response);
+        this.displayResults('Match Submitted Sucessfully!');
+      })
+      .catch((err) => {
+        console.log(err,": An error occurred, couldn't submit data" );
+        this.displayResults("An error occurred, couldn't submit data");
+      })
+    }
   }
-
-  
 
   displayResults(match) {
     if(typeof match !== 'object') {
@@ -69,10 +83,10 @@ class App extends React.Component {
       <div>
         <h1>HACK REACTOR CHESS MATCHES</h1>
         <div>
-          <Post clickSubmit={this.clickSubmit}/>
+          <Post handleClickSubmit={this.handleClickSubmit} handleInputChange={this.handleInputChange}/>
         </div>
         <div>
-          <Search clickSearch={this.clickSearch}/>
+          <Search handleClickSearch={this.handleClickSearch}/>
         </div>
         <div className="display">{this.state.display}</div>
         <div className="display-match">

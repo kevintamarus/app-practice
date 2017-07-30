@@ -35,16 +35,16 @@ app.get('/match', function(req, res) {
 
 app.post('/match', function(req, res) {
   let match = new Match({
-    number: 1,
-    date: 'July 28',
-    white: 'Kevin',
-    black: 'Tamarus',
-    result: 'Draw'
+    number: req.body.number,
+    date: req.body.date,
+    white: req.body.white,
+    black: req.body.black,
+    result: req.body.result
   });
   match.save(function(err) {
     if(err) { return handleError(err) }
   })
-  res.send('Post received');
+  res.send('POST received');
 })
 
 app.listen(PORT, function(err) {
