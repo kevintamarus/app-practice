@@ -1,0 +1,25 @@
+body {
+  background-color: skyblue;
+  text-align: center;
+}
+
+.post-main {
+  margin: 50px;
+  background-color: yellow;
+}
+
+.search-main {
+  margin: 50px;
+  background-color: green;
+}
+
+.display {
+  margin: 50px;
+  color: red;
+  font-size: 40px;
+}
+
+.display-match {
+  Color: green;
+  font-size: 40px;
+}

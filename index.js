@@ -20,16 +20,12 @@ const PORT = 3000;
 app.use(express.static(__dirname + '/client/static'));
 app.use(bodyParser.json());
 
-// app.get('/', (req,res)=>{
-//   console.log('get request');
-//   res.sendFile(__dirname + '/client/static');
-// })
 app.get('/match', function(req, res) {
   
   Match.findOne({})
   .then(function(data) {
     console.log('this is the data ', data);
-    res.send(data);
+    res.send(JSON.stringify(data));
   })
   .catch(function(reason) {
     console.log('did not retrieve data');
@@ -37,9 +33,10 @@ app.get('/match', function(req, res) {
   })
 })
 
-app.post('/', function(req, res) {
+app.post('/match', function(req, res) {
   let match = new Match({
-    date: 'july28',
+    number: 1,
+    date: 'July 28',
     white: 'Kevin',
     black: 'Tamarus',
     result: 'Draw'

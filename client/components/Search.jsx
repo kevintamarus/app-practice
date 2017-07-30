@@ -10,7 +10,7 @@ class Search extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="search-main">
         <h1>Search Match:</h1>
         <div className="dropdown">
           <select>

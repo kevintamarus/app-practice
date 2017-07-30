@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const matchSchema = new Schema({
+  number: Number,
   date: String,
   white: String,
   black: String,

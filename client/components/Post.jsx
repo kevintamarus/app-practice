@@ -3,7 +3,7 @@ import React from 'react';
 class Post extends React.Component {
   render () {
     return (
-      <div className="post-match">
+      <div className="post-main">
         <h1>Submit your matches here:</h1>
         <form>
           Date: <input name="input-date" type="text"/>

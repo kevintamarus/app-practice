@@ -8,7 +8,10 @@ class App extends React.Component {
     super(props),
 
     this.state = {
-      displayResults: 'There Are No Matches To Display'
+      display1: 'Click Search To Begin!',
+      display2: null,
+      display3: null,
+      display4: null,
     }
     this.clickSearch = this.clickSearch.bind(this);
     this.clickSubmit = this.clickSubmit.bind(this);
@@ -17,21 +20,19 @@ class App extends React.Component {
   clickSearch() {
     axios.get('/match')
     .then(({data}) => {
-      console.log('data received')
       this.displayResults(data);
     })
     .catch(err => {
-      console.log("an error occured, couldn't get data");
-      this.displayResults("An Error Occurred, Couldn't Get Data");
+      console.log("An error occured, couldn't get data");
+      //this.displayResults("An Error Occurred, Couldn't Get Data");
     });
-
-    this.displayResults("No Matches Found, Please Try Again!");
   }
   //axios POST
-  clickSubmit(data, ) {
+  clickSubmit(data) {
     data.preventDefault();
-    axios.post('/', {
-      date: "july29",
+    axios.post('/match', {
+      number: 1,
+      date: "July 29",
       white: "Kevin",
       black: "Tamarus",
       result: "Draw"
@@ -42,17 +43,24 @@ class App extends React.Component {
     })
     .catch((error) => {
       console.log(error);
-      this.displayResults("An Error Occurred, Couldn't Submit Data");
+      this.displayResults("An error occurred, couldn't submit data");
     })
   }
 
   
 
   displayResults(match) {
-    if(!match) {
-      this.setState({displayResults: "No Matches Found, Please Try Again!"});
+    if(typeof match !== 'object') {
+      this.setState({display: match});
     } else {
-      this.setState({displayResults : match});
+      this.setState({
+        display: null,
+        display1: `Match#: ${match.number}`,
+        display2: `Date: ${match.date}`  ,
+        display3:`Player White: ${match.white}`,
+        display4: `Player Black: ${match.black}`,
+        display5: `Result: ${match.result}`,
+      });
     }
   }
 
@@ -66,7 +74,14 @@ class App extends React.Component {
         <div>
           <Search clickSearch={this.clickSearch}/>
         </div>
-        <div className="display">{this.state.displayResults}</div>
+        <div className="display">{this.state.display}</div>
+        <div className="display-match">
+          <div className="display1">{this.state.display1}</div>
+          <div className="display2">{this.state.display2}</div>
+          <div className="display3">{this.state.display3}</div>
+          <div className="display4">{this.state.display4}</div>
+          <div className="display5">{this.state.display5}</div>
+        </div>
       </div>
     )
   }
