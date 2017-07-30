@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 //var db = require('./db');
-
+const path = require('path');
 //middleware
 //var parser = require('body parser');
 
 //connecting mongoose
 const mongoose = require('mongoose');
-const keys = require('../config/keys');
-const Match = require('../models/matches');
+const keys = require('./config/keys');
+const Match = require('./models/matches');
 
 
 const mongoLink = keys.mongoURI;
@@ -17,10 +17,15 @@ mongoose.connect(mongoLink);
 
 const app = express();
 const PORT = 3000;
+app.use(express.static(__dirname + '/client/static'));
 app.use(bodyParser.json());
 
-
-app.get('/', function(req, res) {
+// app.get('/', (req,res)=>{
+//   console.log('get request');
+//   res.sendFile(__dirname + '/client/static');
+// })
+app.get('/match', function(req, res) {
+  
   Match.findOne({})
   .then(function(data) {
     console.log('this is the data ', data);

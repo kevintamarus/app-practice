@@ -17,6 +17,7 @@ class App extends React.Component {
   clickSearch() {
     axios.get('/match')
     .then(({data}) => {
+      console.log('data received')
       this.displayResults(data);
     })
     .catch(err => {
