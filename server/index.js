@@ -8,13 +8,17 @@ const bodyParser = require('body-parser')
 //connecting mongoose
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
-const Match = require('../models/matches')
+const Match = require('../models/matches');
+
+
 const mongoLink = keys.mongoURI;
 
 mongoose.connect(mongoLink);
 
 const app = express();
 const PORT = 3000;
+app.use(bodyParser.json());
+
 
 app.get('/', function(req, res) {
   Match.findOne({})
