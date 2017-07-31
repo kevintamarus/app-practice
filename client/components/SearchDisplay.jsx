@@ -5,13 +5,13 @@ const SearchDisplay = (props) => {
     <ul>
       {props.matches.map( (match, key) => {
           return (
-            <li key={key}>
-              <span>Match Number: {match.number}</span>
-              <span>Date of Match: {match.date}</span>
-              <span>Player White: {match.white}</span>
-              <span>Player Black: {match.black}</span>
-              <span>Result of Match: {match.result}</span>
-            </li>
+            <div key={key}>
+              <span className="display-divider">Match Number: {match.number}</span>
+              <span className="display-divider">Date of Match: {match.date}</span>
+              <span className="display-divider">Player White: {match.white}</span>
+              <span className="display-divider">Player Black: {match.black}</span>
+              <span className="display-divider">Result of Match: {match.result}</span>
+            </div>
           )
       })}
     </ul>

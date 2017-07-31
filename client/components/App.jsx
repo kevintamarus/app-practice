@@ -55,7 +55,7 @@ class App extends React.Component {
     axios.get('/match')
     .then(({data}) => {
       let filteredData = data.filter(match => {
-        return match[type] === this.state.searchText;
+        return match[type].toLowerCase() === this.state.searchText.toLowerCase();
       })
       this.setState({matches: filteredData});
       this.displayResults(filteredData);
