@@ -1,10 +1,10 @@
 import React from 'react';
-
+import SearchDisplay from './SearchDisplay';
 class Search extends React.Component {
   constructor(props) {
     super(props),
     this.state = {
-
+      matches: [],
     }
   }
 
@@ -24,20 +24,8 @@ class Search extends React.Component {
           <input type="submit" value="Submit" onClick={(e) => this.props.handleClickSearch(e)}></input>
         </div>
 
-        {/* <form id="form-search"onChange={(type) => {this.props.handleSearchType(type)}}>
-          <select onChange={(type) => {this.props.handleSearchType(type)}}>
-            <option value="date">Date of Match</option>
-            <option value="white">Player White</option>
-            <option value="black">Player Black</option>
-            <option value="result">Result of Match</option>
-          </select>
-          <input type="submit" value="Submit" onClick={(type) => this.props.handleClickSearch(type)}></input>
-        </form>  */}
-
         <div className="display-match">
-          {/* {this.props.matches.map( (match) => {
-            <SearchDisplay  match={match}/>
-          })} */}
+          <SearchDisplay matches={this.props.matches}/>
         </div>
       </div>
     )

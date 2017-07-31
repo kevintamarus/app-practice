@@ -1,23 +1,21 @@
 import React from 'react';
 
-class SearchDisplay extends React.Component {
-  constructor(props) {
-    super(props),
-    this.state = {
-
-    }
-  }
-
-  render () {
-    return (
-      <div className="search-display">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    )
-  }
+const SearchDisplay = (props) => {
+  return <div>
+    <ul>
+      {props.matches.map( (match, key) => {
+          return (
+            <li key={key}>
+              <span>Match Number: {match.number}</span>
+              <span>Date of Match: {match.date}</span>
+              <span>Player White: {match.white}</span>
+              <span>Player Black: {match.black}</span>
+              <span>Result of Match: {match.result}</span>
+            </li>
+          )
+      })}
+    </ul>
+  </div>
 }
 
 export default SearchDisplay;

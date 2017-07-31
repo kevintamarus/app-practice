@@ -52,7 +52,6 @@ class App extends React.Component {
   handleClickSearch(input) {
     input.preventDefault();
     let type = this.state.searchType;
-    console.log('this is the value', type)
     axios.get('/match')
     .then(({data}) => {
       let filteredData = data.filter(match => {
@@ -92,8 +91,6 @@ class App extends React.Component {
   }
 
   render () {
-    console.log('this is the array', this.state.matches)
-    console.log(this.state.searchText);
     return (
       <div>
         <h1>HACK REACTOR CHESS MATCHES</h1>
