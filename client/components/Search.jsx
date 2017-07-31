@@ -21,7 +21,7 @@ class Search extends React.Component {
             <option value="result">Result</option>
           </select>
           <input name="search-text" type="text"/>
-          <button className="search-button" onClick={() => this.props.handleClickSearch()}>Search for Matches</button>
+          <button className="search-button" onClick={this.props.handleClickSearch}>Search for Matches</button>
         </div>
         <div className="display-match"></div>
       </div>

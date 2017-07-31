@@ -6,9 +6,9 @@ import axios from 'axios';
 class App extends React.Component {
   constructor(props) {
     super(props),
-
     this.state = {
-      display1: 'Click Search To Begin!',
+      display: 'Click Search To Begin!',
+      display1: null,
       display2: null,
       display3: null,
       display4: null,
@@ -20,13 +20,29 @@ class App extends React.Component {
 
     };
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handlecClickSearch = this.handleClickSearch.bind(this);
+    this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleClickSubmit = this.handleClickSubmit.bind(this);
+    this.displayResults = this.displayResults.bind(this);
   }
 
   handleInputChange(stateToChange, input) {
     let string = input.target.value;
     this.setState({[stateToChange]: string});
+  }
+  
+  displayResults(match) {
+    if(typeof match !== 'object') {
+      this.setState({display: match});
+    } else {
+      this.setState({
+        display: null,
+        display1: `Match#: ${match.number}`,
+        display2: `Date: ${match.date}`  ,
+        display3:`Player White: ${match.white}`,
+        display4: `Player Black: ${match.black}`,
+        display5: `Result: ${match.result}`,
+      });
+    }
   }
   //axios GET
   handleClickSearch() {
@@ -60,21 +76,6 @@ class App extends React.Component {
         console.log(err,": An error occurred, couldn't submit data" );
         this.displayResults("An error occurred, couldn't submit data");
       })
-    }
-  }
-
-  displayResults(match) {
-    if(typeof match !== 'object') {
-      this.setState({display: match});
-    } else {
-      this.setState({
-        display: null,
-        display1: `Match#: ${match.number}`,
-        display2: `Date: ${match.date}`  ,
-        display3:`Player White: ${match.white}`,
-        display4: `Player Black: ${match.black}`,
-        display5: `Result: ${match.result}`,
-      });
     }
   }
 

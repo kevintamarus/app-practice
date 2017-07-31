@@ -4,7 +4,7 @@ class Post extends React.Component {
   render () {
     return (
       <div className="post-main">
-        <h1>Submit your matches here:</h1>
+        <h1>Submit Your Match Here:</h1>
         <form>
           Date: <input name="input-date" type="text" onChange={(input) => this.props.handleInputChange('date', input)}/>
           Player White: <input name="input-white" type="text" onChange={(input) => this.props.handleInputChange('white', input)}/>
