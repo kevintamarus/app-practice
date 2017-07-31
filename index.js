@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.get('/match', function(req, res) {
   
-  Match.findOne({})
+  Match.find({})
   .then(function(data) {
     console.log('this is the data ', data);
     res.send(JSON.stringify(data));

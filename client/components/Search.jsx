@@ -11,19 +11,34 @@ class Search extends React.Component {
   render () {
     return (
       <div className="search-main">
-        <h1>Search Match:</h1>
-        <div className="dropdown">
-          <select>
-            <option value="match-number">Match Number</option>
+        <h1>Search Matches:</h1>
+        <input name="search-text" type="text" onChange={(input) => this.props.handleSearchText(input)}/>
+
+        <div>
+          <select onChange={(input) => this.props.handleSearchType(input)}>
             <option value="date">Date of Match</option>
             <option value="white">Player White</option>
             <option value="black">Player Black</option>
-            <option value="result">Result</option>
+            <option value="result">Result of Match</option>
           </select>
-          <input name="search-text" type="text"/>
-          <button className="search-button" onClick={this.props.handleClickSearch}>Search for Matches</button>
+          <input type="submit" value="Submit" onClick={(e) => this.props.handleClickSearch(e)}></input>
         </div>
-        <div className="display-match"></div>
+
+        {/* <form id="form-search"onChange={(type) => {this.props.handleSearchType(type)}}>
+          <select onChange={(type) => {this.props.handleSearchType(type)}}>
+            <option value="date">Date of Match</option>
+            <option value="white">Player White</option>
+            <option value="black">Player Black</option>
+            <option value="result">Result of Match</option>
+          </select>
+          <input type="submit" value="Submit" onClick={(type) => this.props.handleClickSearch(type)}></input>
+        </form>  */}
+
+        <div className="display-match">
+          {/* {this.props.matches.map( (match) => {
+            <SearchDisplay  match={match}/>
+          })} */}
+        </div>
       </div>
     )
   }

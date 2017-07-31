@@ -8,47 +8,58 @@ class App extends React.Component {
     super(props),
     this.state = {
       display: 'Click Search To Begin!',
-      display1: null,
-      display2: null,
-      display3: null,
-      display4: null,
-      display5: null,
       date: '',
       white: '',
       black: '',
       result: '',
-
+      matches: [],
+      searchText: '',
+      searchType: 'date',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSearchText = this.handleSearchText.bind(this);
     this.handleClickSearch = this.handleClickSearch.bind(this);
     this.handleClickSubmit = this.handleClickSubmit.bind(this);
     this.displayResults = this.displayResults.bind(this);
+    this.handleSearchType = this.handleSearchType.bind(this);
   }
 
   handleInputChange(stateToChange, input) {
     let string = input.target.value;
     this.setState({[stateToChange]: string});
   }
+
+  handleSearchText(input) {
+    let string = input.target.value;
+    this.setState({searchText: string});
+  }
+  
+  handleSearchType(type) {
+    let string = type.target.value;
+    this.setState({searchType: string});
+  }
   
   displayResults(match) {
-    if(typeof match !== 'object') {
-      this.setState({display: match});
+    if(match.length === 0) {
+      this.setState({display: 'No Matches Found'});
+    } else if(Array.isArray(match)) {
+      this.setState({display: `${match}`});
     } else {
-      this.setState({
-        display: null,
-        display1: `Match#: ${match.number}`,
-        display2: `Date: ${match.date}`  ,
-        display3:`Player White: ${match.white}`,
-        display4: `Player Black: ${match.black}`,
-        display5: `Result: ${match.result}`,
-      });
+      this.setState({display: match});
     }
   }
   //axios GET
-  handleClickSearch() {
+  handleClickSearch(input) {
+    input.preventDefault();
+    let type = this.state.searchType;
+    console.log('this is the value', type)
     axios.get('/match')
     .then(({data}) => {
-      this.displayResults(data);
+      let filteredData = data.filter(match => {
+        return match[type] === this.state.searchText;
+      })
+      this.setState({matches: filteredData});
+      this.displayResults(filteredData);
     })
     .catch(err => {
       console.log(err, ": An error occured, couldn't get data");
@@ -59,7 +70,7 @@ class App extends React.Component {
   handleClickSubmit(data) {
     data.preventDefault();
     if(this.state.date === '' || this.state.white === '' || this.state.black === '' || this.state.result === '') {
-      this.displayResults('You did not fill out the form completely, please try again!');
+      this.displayResults('You did not fill out the form correctly, please try again!');
     } else {
       axios.post('/match', {
         number: 1,
@@ -76,10 +87,13 @@ class App extends React.Component {
         console.log(err,": An error occurred, couldn't submit data" );
         this.displayResults("An error occurred, couldn't submit data");
       })
+      document.getElementById("form-submit").reset();
     }
   }
 
   render () {
+    console.log('this is the array', this.state.matches)
+    console.log(this.state.searchText);
     return (
       <div>
         <h1>HACK REACTOR CHESS MATCHES</h1>
@@ -87,7 +101,7 @@ class App extends React.Component {
           <Post handleClickSubmit={this.handleClickSubmit} handleInputChange={this.handleInputChange}/>
         </div>
         <div>
-          <Search handleClickSearch={this.handleClickSearch}/>
+          <Search handleClickSearch={this.handleClickSearch} handleSearchText={this.handleSearchText} handleSearchType={this.handleSearchType} matches={this.state.matches}/>
         </div>
         <div className="display">{this.state.display}</div>
         <div className="display-match">
